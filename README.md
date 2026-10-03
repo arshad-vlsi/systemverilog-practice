@@ -40,6 +40,7 @@ systemverilog-practice/
 │     └── 09_shallow_copy.sv       ← Shallow copy ✅
 │     └── 10_deep_copy.sv          ← Deep copy ✅
 │     └── 11_inheritance.sv    ← Inheritance ✅
+│     └── 12_polymorphism.sv   ← Polymorphism ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -69,6 +70,7 @@ systemverilog-practice/
 | 14 | Shallow Copy | oops | ✅ Done |
 | 15 | Deep Copy | oops | ✅ Done |
 | 16 | Inheritance | oops | ✅ Done |
+| 17 | Polymorphism | oops | ✅ Done |
 
 ---
 
@@ -334,12 +336,38 @@ extending parent class to reuse and extend functionality.
 
 ---
 
+### 📌 Task 17 — Polymorphism
+
+**File:** `oops/12_polymorphism.sv`
+
+Explored polymorphism using `virtual` function — parent
+handle pointing to child object calls child's version.
+
+| Scenario | f.display() output |
+|----------|--------------------|
+| Without virtual | First : the value of data : 4 |
+| With virtual + f = s | Second : the value of data : 4 |
+
+**Key Concepts Used:**
+- `virtual function` in parent class
+- Child class **overrides** `display()` function
+- `f = s` — parent handle points to child object
+- `f.display()` calls **child's** display due to virtual
+
+**Key Learning:**
+- Without `virtual` → parent handle calls **parent** function
+- With `virtual` → parent handle calls **child** function
+- This is **runtime polymorphism** in SystemVerilog
+- Critical concept in **OOP-based verification** (UVM)
+
+---
+
 ### 🎯 Learning Goals
 
 - [x] Clock generation & edge alignment
 - [x] SystemVerilog Data Types & Variables
 - [x] Arrays, Queues & Associative Arrays
-- [x] OOP — Classes, Functions, Tasks, Pass by Value/Reference
+- [x] OOP — Classes, Inheritance, Polymorphism
 - [ ] Clocking Blocks & Interfaces
 - [ ] Assertions (SVA — SystemVerilog Assertions)
 - [ ] Randomization & Constraints
