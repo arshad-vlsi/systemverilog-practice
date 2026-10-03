@@ -38,6 +38,7 @@ systemverilog-practice/
 │     └── 07_this_keyword.sv       ← this keyword ✅
 │     └── 08_nested_classes.sv     ← Nested classes ✅
 │     └── 09_shallow_copy.sv       ← Shallow copy ✅
+│     └── 10_deep_copy.sv          ← Deep copy ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -65,6 +66,7 @@ systemverilog-practice/
 | 12 | this Keyword & Named Arguments | oops | ✅ Done |
 | 13 | Nested Classes | oops | ✅ Done |
 | 14 | Shallow Copy | oops | ✅ Done |
+| 15 | Deep Copy | oops | ✅ Done |
 
 ---
 
@@ -274,6 +276,33 @@ copy one object's data into another object.
 - Changing `f2.data` does **NOT** affect `f1.data`
 - Shallow copy copies only **primitive members** directly
 - For nested objects use **deep copy** instead
+
+---
+
+### 📌 Task 15 — Deep Copy
+
+**File:** `oops/10_deep_copy.sv`
+
+Implemented deep copy in SystemVerilog using a custom
+`copy()` function inside the class that manually copies
+each member to a new object.
+
+| Member | Value |
+|--------|-------|
+| data | 34 |
+| temp | 8'h11 |
+
+**Key Concepts Used:**
+- Custom `copy()` function returns a new object of same class
+- `copy = new()` creates fresh object inside function
+- Each member copied manually — `copy.data = data`
+- `f2 = f1.copy` — calls copy function on f1
+- Deep copy vs Shallow copy — deep copy is safer for nested objects
+
+**Key Learning:**
+- Shallow copy `new f1` — fast but shared nested handles
+- Deep copy via custom function — fully independent copy
+- Deep copy is preferred in **verification environments**
 
 ---
 
