@@ -37,6 +37,7 @@ systemverilog-practice/
 │     └── 06_constructor.sv      ← Constructor ✅
 │     └── 07_this_keyword.sv       ← this keyword ✅
 │     └── 08_nested_classes.sv     ← Nested classes ✅
+│     └── 09_shallow_copy.sv       ← Shallow copy ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -63,6 +64,7 @@ systemverilog-practice/
 | 11 | Constructor | oops | ✅ Done |
 | 12 | this Keyword & Named Arguments | oops | ✅ Done |
 | 13 | Nested Classes | oops | ✅ Done |
+| 14 | Shallow Copy | oops | ✅ Done |
 
 ---
 
@@ -250,6 +252,28 @@ containing an object of another class as a member.
 - Inner object must be created inside outer constructor
 - Members accessed via **chained dot operator** `s.f1.data`
 - Inner object data can be read and modified from outside
+
+---
+
+### 📌 Task 14 — Shallow Copy
+
+**File:** `oops/09_shallow_copy.sv`
+
+Explored shallow copy in SystemVerilog using `new` to
+copy one object's data into another object.
+
+| Step | f1.data | f2.data |
+|------|---------|---------|
+| After `f1.data = 32` | 32 | — |
+| After `f2 = new f1` | 32 | 32 |
+| After `f2.data = 64` | 32 | 64 |
+
+**Key Learning:**
+- `f2 = new f1` creates a **shallow copy** of f1 into f2
+- Both objects are **independent** after copying
+- Changing `f2.data` does **NOT** affect `f1.data`
+- Shallow copy copies only **primitive members** directly
+- For nested objects use **deep copy** instead
 
 ---
 
