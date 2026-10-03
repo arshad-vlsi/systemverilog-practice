@@ -39,6 +39,7 @@ systemverilog-practice/
 │     └── 08_nested_classes.sv     ← Nested classes ✅
 │     └── 09_shallow_copy.sv       ← Shallow copy ✅
 │     └── 10_deep_copy.sv          ← Deep copy ✅
+│     └── 11_inheritance.sv    ← Inheritance ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -67,6 +68,7 @@ systemverilog-practice/
 | 13 | Nested Classes | oops | ✅ Done |
 | 14 | Shallow Copy | oops | ✅ Done |
 | 15 | Deep Copy | oops | ✅ Done |
+| 16 | Inheritance | oops | ✅ Done |
 
 ---
 
@@ -303,6 +305,32 @@ each member to a new object.
 - Shallow copy `new f1` — fast but shared nested handles
 - Deep copy via custom function — fully independent copy
 - Deep copy is preferred in **verification environments**
+
+---
+
+### 📌 Task 16 — Inheritance
+
+**File:** `oops/11_inheritance.sv`
+
+Explored inheritance in SystemVerilog — child class
+extending parent class to reuse and extend functionality.
+
+| Class | Type | Members |
+|-------|------|---------|
+| `first` | Parent | `data = 32` · `display()` |
+| `second` | Child | `temp = 16` · `add()` + inherits from `first` |
+
+**Key Concepts Used:**
+- `extends` keyword — child inherits parent members
+- Child object `s` can access parent's `data` & `display()`
+- Child adds its own member `temp` and function `add()`
+- Single object accesses both parent & child members
+
+**Key Learning:**
+- `class second extends first` — inherits all members of `first`
+- Child class can **use** parent members directly
+- Child class can **add** new members on top of parent
+- Promotes **code reuse** in verification environments
 
 ---
 
