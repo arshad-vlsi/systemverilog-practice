@@ -43,6 +43,7 @@ systemverilog-practice/
 │     └── 12_polymorphism.sv   ← Polymorphism ✅
 ├── 📁 randomization/
 │     └── 01_rand_constraints.sv  ← rand, randc & constraints ✅
+│     └── 02_advanced_constraints.sv  ← Advanced constraints ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -74,6 +75,7 @@ systemverilog-practice/
 | 16 | Inheritance | oops | ✅ Done |
 | 17 | Polymorphism | oops | ✅ Done |
 | 18 | Randomization & Constraints | randomization | ✅ Done |
+| 19 | Advanced Constraints | randomization | ✅ Done |
 
 ---
 
@@ -387,7 +389,30 @@ randomization check.
 - `constraint` block → restricts random value range
 - `assert(g.randomize)` → better than `if(!g.randomize)`
 - Randomization failure caught via `$display` + `$finish`
-  
+
+---
+
+### 📌 Task 19 — Advanced Constraints
+
+**File:** `randomization/02_advanced_constraints.sv`
+
+Explored advanced constraint techniques in SystemVerilog
+including inside operator, range constraints and negation.
+
+| Constraint Type | Syntax | Description |
+|----------------|--------|-------------|
+| Range | `a inside {[0:8]}` | Value within range |
+| Specific values | `a inside {10,11,15}` | Exact values only |
+| Negation | `!(a inside {[3:7]})` | Skip range 3 to 7 |
+| Multiple blocks | `constraint data_a` + `constraint data_b` | Separate constraints |
+| Combined | `a>3; a<7; b>0` | Multiple rules in one block |
+
+**Key Learning:**
+- `inside {[min:max]}` → value within range
+- `!(inside {})` → exclude/skip a range
+- Multiple `constraint` blocks → all applied simultaneously
+- Commented constraints show different approaches to same problem
+
 ---
 
 ### 🎯 Learning Goals
