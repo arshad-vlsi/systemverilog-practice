@@ -41,6 +41,8 @@ systemverilog-practice/
 │     └── 10_deep_copy.sv          ← Deep copy ✅
 │     └── 11_inheritance.sv    ← Inheritance ✅
 │     └── 12_polymorphism.sv   ← Polymorphism ✅
+├── 📁 randomization/
+│     └── 01_rand_constraints.sv  ← rand, randc & constraints ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -71,6 +73,7 @@ systemverilog-practice/
 | 15 | Deep Copy | oops | ✅ Done |
 | 16 | Inheritance | oops | ✅ Done |
 | 17 | Polymorphism | oops | ✅ Done |
+| 18 | Randomization & Constraints | randomization | ✅ Done |
 
 ---
 
@@ -362,15 +365,40 @@ handle pointing to child object calls child's version.
 
 ---
 
+### 📌 Task 18 — Randomization & Constraints
+
+**File:** `randomization/01_rand_constraints.sv`
+
+Explored randomization in SystemVerilog using `rand`,
+`randc` and `constraint` block with assertion-based
+randomization check.
+
+| Concept | Description |
+|---------|-------------|
+| `randc` | Cyclic random — no repeat until all values used |
+| `rand` | Pure random — can repeat values |
+| `constraint data` | Restricts `a > 15` (only value = 15 for 4-bit) |
+| `g.randomize()` | Randomizes all rand/randc members |
+| `assert(g.randomize)` | Fails simulation if randomization fails |
+
+**Key Learning:**
+- `rand` → purely random values each call
+- `randc` → cyclic — covers all values before repeating
+- `constraint` block → restricts random value range
+- `assert(g.randomize)` → better than `if(!g.randomize)`
+- Randomization failure caught via `$display` + `$finish`
+  
+---
+
 ### 🎯 Learning Goals
 
 - [x] Clock generation & edge alignment
 - [x] SystemVerilog Data Types & Variables
 - [x] Arrays, Queues & Associative Arrays
 - [x] OOP — Classes, Inheritance, Polymorphism
+- [x] Randomization & Constraints
 - [ ] Clocking Blocks & Interfaces
 - [ ] Assertions (SVA — SystemVerilog Assertions)
-- [ ] Randomization & Constraints
 - [ ] Testbench Components — Driver, Monitor, Scoreboard
 
 ---
