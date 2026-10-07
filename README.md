@@ -44,6 +44,7 @@ systemverilog-practice/
 ├── 📁 randomization/
 │     └── 01_rand_constraints.sv  ← rand, randc & constraints ✅
 │     └── 02_advanced_constraints.sv  ← Advanced constraints ✅
+│     └── 03_pre_post_randomize.sv    ← pre/post randomize ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -76,6 +77,7 @@ systemverilog-practice/
 | 17 | Polymorphism | oops | ✅ Done |
 | 18 | Randomization & Constraints | randomization | ✅ Done |
 | 19 | Advanced Constraints | randomization | ✅ Done |
+| 20 | pre_randomize & post_randomize | randomization | ✅ Done |
 
 ---
 
@@ -413,6 +415,34 @@ including inside operator, range constraints and negation.
 - Multiple `constraint` blocks → all applied simultaneously
 - Commented constraints show different approaches to same problem
 
+---
+
+### 📌 Task 20 — pre_randomize & post_randomize
+
+**File:** `randomization/04_pre_post_randomize.sv`
+
+Explored pre_randomize and post_randomize callback
+functions — called automatically before and after
+`randomize()` is invoked.
+
+| Callback | When Called | Purpose |
+|----------|-------------|---------|
+| `pre_randomize()` | Before `randomize()` | Setup — set min/max values |
+| `post_randomize()` | After `randomize()` | Display randomized values |
+
+**Key Concepts Used:**
+- `pre_randomize()` — sets `min` and `max` before randomization
+- Dynamic constraint `a inside {[min:max]}` uses runtime values
+- `post_randomize()` — auto-called after randomize to display
+- `g.min = 3; g.max = 8` — set from outside before randomize
+
+**Key Learning:**
+- Both are **built-in callbacks** called automatically by `randomize()`
+- No need to call them manually
+- `pre_randomize` useful for **setup before** randomization
+- `post_randomize` useful for **display/logging after** randomization
+- Widely used in **UVM** sequence items
+- 
 ---
 
 ### 🎯 Learning Goals
