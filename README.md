@@ -442,7 +442,7 @@ functions — called automatically before and after
 - `pre_randomize` useful for **setup before** randomization
 - `post_randomize` useful for **display/logging after** randomization
 - Widely used in **UVM** sequence items
-- 
+
 ---
 
 ### 🎯 Learning Goals
