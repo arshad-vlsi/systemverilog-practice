@@ -419,7 +419,7 @@ including inside operator, range constraints and negation.
 
 ### 📌 Task 20 — pre_randomize & post_randomize
 
-**File:** `randomization/04_pre_post_randomize.sv`
+**File:** `randomization/03_pre_post_randomize.sv`
 
 Explored pre_randomize and post_randomize callback
 functions — called automatically before and after
