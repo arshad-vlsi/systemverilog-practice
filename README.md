@@ -45,6 +45,7 @@ systemverilog-practice/
 │     └── 01_rand_constraints.sv  ← rand, randc & constraints ✅
 │     └── 02_advanced_constraints.sv  ← Advanced constraints ✅
 │     └── 03_pre_post_randomize.sv    ← pre/post randomize ✅
+│     └── 04_dist_constraints.sv      ← Distribution constraints ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -78,6 +79,7 @@ systemverilog-practice/
 | 18 | Randomization & Constraints | randomization | ✅ Done |
 | 19 | Advanced Constraints | randomization | ✅ Done |
 | 20 | pre_randomize & post_randomize | randomization | ✅ Done |
+| 21 | Distribution Constraints | randomization | ✅ Done |
 
 ---
 
@@ -442,6 +444,32 @@ functions — called automatically before and after
 - `pre_randomize` useful for **setup before** randomization
 - `post_randomize` useful for **display/logging after** randomization
 - Widely used in **UVM** sequence items
+
+---
+
+### 📌 Task 21 — Distribution Constraints
+
+**File:** `randomization/04_dist_constraints.sv`
+
+Explored distribution constraints using `:=` and `:/`
+operators to control probability of random values.
+
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `:=` | Each item gets exact weight | `0 := 30` → 30/300 probability |
+| `:/` | Weight shared across range | `[1:3] :/ 90` → 90/120 shared among 1,2,3 |
+
+**Key Concepts Used:**
+- `var1 dist {0 := 30, [1:3] := 90}` → 0 gets 30/300, each of 1,2,3 gets 90/300
+- `var2 dist {0 :/ 30, [1:3] :/ 90}` → 0 gets 30/120, 1,2,3 share 90/120
+- `wr dist {0 := 30, 1 := 70}` → 30% chance 0, 70% chance 1
+- `rd dist {0 :/ 30, 1 :/ 70}` → 30/100 and 70/100
+
+**Key Learning:**
+- `:=` → weight applies **per item** individually
+- `:/` → weight **shared equally** across all items in range
+- Used to bias random values toward specific scenarios
+- Critical for **functional coverage** in verification
 
 ---
 
