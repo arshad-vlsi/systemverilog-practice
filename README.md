@@ -46,6 +46,7 @@ systemverilog-practice/
 │     └── 02_advanced_constraints.sv  ← Advanced constraints ✅
 │     └── 03_pre_post_randomize.sv    ← pre/post randomize ✅
 │     └── 04_dist_constraints.sv      ← Distribution constraints ✅
+│     └── 05_events.sv               ← Events ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -80,6 +81,7 @@ systemverilog-practice/
 | 19 | Advanced Constraints | randomization | ✅ Done |
 | 20 | pre_randomize & post_randomize | randomization | ✅ Done |
 | 21 | Distribution Constraints | randomization | ✅ Done |
+| 22 | Events — Generator & Driver | randomization | ✅ Done |
 
 ---
 
@@ -470,6 +472,34 @@ operators to control probability of random values.
 - `:/` → weight **shared equally** across all items in range
 - Used to bias random values toward specific scenarios
 - Critical for **functional coverage** in verification
+
+---
+
+### 📌 Task 22 — Events
+
+**File:** `randomization/05_events.sv`
+
+Explored `event` in SystemVerilog for synchronization
+between Generator and Driver blocks.
+
+| Block | Role |
+|-------|------|
+| Generator | Sends 10 random values via `$urandom()` with `#10` delay |
+| Driver | Receives data every `#10` using `forever` loop |
+| Event | `-> done` triggers after all data sent |
+| Wait | `wait(done.triggered)` stops simulation |
+
+**Key Concepts Used:**
+- `event done` — declares a synchronization event
+- `-> done` — triggers the event
+- `wait(done.triggered)` — waits until event is triggered
+- `forever` loop in driver — keeps receiving data
+- `$finish()` — ends simulation after event triggered
+
+**Key Learning:**
+- Events are used for **inter-process synchronization**
+- `->` triggers · `wait()` waits for trigger
+- Foundation for **mailbox & semaphore** concepts in UVM
 
 ---
 
