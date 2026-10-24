@@ -47,6 +47,7 @@ systemverilog-practice/
 │     └── 03_pre_post_randomize.sv    ← pre/post randomize ✅
 │     └── 04_dist_constraints.sv      ← Distribution constraints ✅
 │     └── 05_events.sv               ← Events ✅
+│     └── 06_events_fork_join.sv     ← Events with fork-join ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -82,6 +83,7 @@ systemverilog-practice/
 | 20 | pre_randomize & post_randomize | randomization | ✅ Done |
 | 21 | Distribution Constraints | randomization | ✅ Done |
 | 22 | Events — Generator & Driver | randomization | ✅ Done |
+| 23 | Events with Fork-Join | randomization | ✅ Done |
 
 ---
 
@@ -500,6 +502,34 @@ between Generator and Driver blocks.
 - Events are used for **inter-process synchronization**
 - `->` triggers · `wait()` waits for trigger
 - Foundation for **mailbox & semaphore** concepts in UVM
+
+---
+
+### 📌 Task 23 — Events with Fork-Join
+
+**File:** `randomization/05_events_fork_join.sv`
+
+Explored event-based synchronization between Generator,
+Receiver and Wait tasks running in parallel using fork-join.
+
+| Task | Role |
+|------|------|
+| `generator()` | Sends 10 random values with #10 delay — waits for `next` event |
+| `receiver()` | Receives data after #10 — triggers `next` event |
+| `wait_event()` | Waits for `done` event → displays completion → `$finish` |
+
+**Key Concepts Used:**
+- `event done` — signals all stimulus sent
+- `event next` — handshake between generator & receiver
+- `-> next` — trigger next event after receiving
+- `wait(next.triggered)` — generator waits for receiver ACK
+- `fork...join` — all 3 tasks run in **parallel**
+- Handshake mechanism — generator waits for receiver before sending next data
+
+**Key Learning:**
+- `fork-join` runs all tasks simultaneously
+- `event` provides **handshake synchronization** between parallel tasks
+- This is the foundation of **Driver-Monitor** communication in UVM
 
 ---
 
