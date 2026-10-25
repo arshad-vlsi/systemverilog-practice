@@ -48,6 +48,7 @@ systemverilog-practice/
 │     └── 04_dist_constraints.sv      ← Distribution constraints ✅
 │     └── 05_events.sv               ← Events ✅
 │     └── 06_events_fork_join.sv     ← Events with fork-join ✅
+│     └── 07_semaphore.sv            ← Semaphore ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -84,6 +85,7 @@ systemverilog-practice/
 | 21 | Distribution Constraints | randomization | ✅ Done |
 | 22 | Events — Generator & Driver | randomization | ✅ Done |
 | 23 | Events with Fork-Join | randomization | ✅ Done |
+| 24 | Semaphore | randomization | ✅ Done |
 
 ---
 
@@ -530,6 +532,37 @@ Receiver and Wait tasks running in parallel using fork-join.
 - `fork-join` runs all tasks simultaneously
 - `event` provides **handshake synchronization** between parallel tasks
 - This is the foundation of **Driver-Monitor** communication in UVM
+
+---
+
+### 📌 Task 24 — Semaphore
+
+**File:** `randomization/07_semaphore.sv`
+
+Explored semaphore in SystemVerilog — used to control
+access to a shared resource between two parallel tasks
+running in fork-join.
+
+| Component | Role |
+|-----------|------|
+| `semaphore sem` | Controls access — initialized with `new(1)` |
+| `send_first()` | Gets semaphore → sends 10 random values (1–9) → releases |
+| `send_second()` | Waits for semaphore → sends 10 random values (11–19) → releases |
+| `fork-join` | Both tasks run in parallel — semaphore ensures sequential access |
+
+**Key Concepts Used:**
+- `semaphore sem = new(1)` — creates semaphore with 1 key
+- `sem.get(1)` — acquires the semaphore (blocks if unavailable)
+- `sem.put(1)` — releases the semaphore
+- `rand int data` with `constraint` — constrained randomization
+- `fork-join` — parallel execution of send_first & send_second
+- Only one task accesses shared resource at a time
+
+**Key Learning:**
+- Semaphore prevents **race conditions** on shared resources
+- `send_first` runs completely before `send_second` gets access
+- Critical concept in **UVM** for controlling driver/monitor access
+- Difference from event — semaphore **blocks** until key is available
 
 ---
 
