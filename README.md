@@ -49,6 +49,7 @@ systemverilog-practice/
 │     └── 05_events.sv               ← Events ✅
 │     └── 06_events_fork_join.sv     ← Events with fork-join ✅
 │     └── 07_semaphore.sv            ← Semaphore ✅
+│     └── 08_mailbox.sv        ← Mailbox ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -86,6 +87,7 @@ systemverilog-practice/
 | 22 | Events — Generator & Driver | randomization | ✅ Done |
 | 23 | Events with Fork-Join | randomization | ✅ Done |
 | 24 | Semaphore | randomization | ✅ Done |
+| 25 | Mailbox — Generator & Driver | randomization | ✅ Done |
 
 ---
 
@@ -563,6 +565,43 @@ running in fork-join.
 - `send_first` runs completely before `send_second` gets access
 - Critical concept in **UVM** for controlling driver/monitor access
 - Difference from event — semaphore **blocks** until key is available
+
+---
+
+### 📌 Task 25 — Mailbox
+
+**File:** `randomization/08_mailbox.sv`
+
+Explored the mailbox in SystemVerilog, a built-in class for passing data
+between testbench components. A `generator` class puts a value into the
+mailbox and a `driver` class gets it, sharing one mailbox handle.
+
+| Component | Role |
+|-----------|------|
+| `mailbox mbx` | Created once in `tb` with `mbx = new()` and passed to both classes |
+| `generator` | Holds `data = 16`; `run()` calls `mbx.put(data)` |
+| `driver` | `run()` calls `mbx.get(datac)` and stores the value in `datac` |
+| `tb` | Builds the mailbox and both objects, then calls `gen.run()` followed by `drv.run()` |
+
+**Expected console output:**
+
+| Output line | Printed by |
+|-------------|------------|
+| `[GEN] : DATA SENT : 16` | `generator.run()` |
+| `[DRV] : DATA RCVD : 16` | `driver.run()` |
+
+**Key Concepts Used:**
+- `mailbox` — built-in class for passing messages between components
+- `put()` — sends a value into the mailbox
+- `get()` — removes and returns the next value; blocks until one is available
+- `new(mailbox mbx)` with `this.mbx = mbx` — hands the same mailbox handle to both objects
+- Class-based generator and driver, each with a `task run()`
+
+**Key Learning:**
+- Generator and driver never reference each other; they communicate only through the shared mailbox
+- The mailbox is created without a size, so `put()` never blocks
+- `gen.run()` is called before `drv.run()` in one sequential `initial` block, so the value is already in the mailbox when `get()` runs
+- This is the basic generator-to-driver pattern used in class-based testbenches
 
 ---
 
