@@ -50,6 +50,7 @@ systemverilog-practice/
 │     └── 06_events_fork_join.sv     ← Events with fork-join ✅
 │     └── 07_semaphore.sv            ← Semaphore ✅
 │     └── 08_mailbox.sv        ← Mailbox ✅
+│     └── 09_mailbox_transaction.sv    ← Mailbox with transaction class ✅
 ├── 📁 assertions/
 │     └── (coming soon)
 ├── 📁 randomization/
@@ -88,6 +89,7 @@ systemverilog-practice/
 | 23 | Events with Fork-Join | randomization | ✅ Done |
 | 24 | Semaphore | randomization | ✅ Done |
 | 25 | Mailbox — Generator & Driver | randomization | ✅ Done |
+| 26 | Mailbox — Transaction, Generator & Driver | randomization | ✅ Done |
 
 ---
 
@@ -602,6 +604,47 @@ mailbox and a `driver` class gets it, sharing one mailbox handle.
 - The mailbox is created without a size, so `put()` never blocks
 - `gen.run()` is called before `drv.run()` in one sequential `initial` block, so the value is already in the mailbox when `get()` runs
 - This is the basic generator-to-driver pattern used in class-based testbenches
+
+---
+
+### 📌 Task 26 — Mailbox with Transaction Class
+
+**File:** `randomization/09_mailbox_transaction.sv`
+
+Extended the mailbox example from Task 25 to carry whole objects. A
+`generator` creates 10 randomized `transaction` objects and puts them in a
+mailbox, while a `driver` running in parallel gets and prints them.
+
+| Component | Role |
+|-----------|------|
+| `transaction` | Holds `rand bit [3:0] din1`, `rand bit [3:0] din2` and `bit [3:0] dout` |
+| `generator` | Loops 10 times: `new()`, `randomize()`, prints `[GEN]`, `mbx.put(t)`, then `#10` |
+| `driver` | `forever` loop: `mbx.get(dc)`, prints `[DRV]`, then `#10` |
+| `tb` | Creates the mailbox, `generator` and `driver`, then runs `g.main()` and `d.main()` in `fork...join` |
+
+**Expected console output:**
+
+| Output pattern | Printed by |
+|----------------|------------|
+| `[GEN] : DATA SENT : din1 : X and din2 : Y` (10 lines) | `generator.main()` |
+| `[DRV] : DATA RCVD : din1 : X and din2 : Y` (10 lines) | `driver.main()` |
+
+Each `[DRV]` line shows the same `din1` and `din2` as the `[GEN]` line before it. The values are random (0–15), so they change between runs.
+
+**Key Concepts Used:**
+- `rand` class properties with `randomize()` checked by `assert`
+- `mailbox` carrying class objects, not just integers
+- `put()` and `get()` for generator-to-driver communication
+- `fork...join` to run generator and driver in parallel
+- `new(mailbox mbx)` with `this.mbx = mbx` to share one mailbox
+
+**Key Learning:**
+- A transaction class groups related signals into one object that moves between components
+- `t = new()` runs every iteration, so each mailbox entry is a separate object
+- `get()` blocks until `put()` supplies a transaction, which is why both sides can run in parallel
+- The driver loops `forever`, so `join` never completes by itself; the run ends when no events remain
+- This is the generator, transaction and driver structure used in class-based testbenches
+- `dout` is declared in the transaction but not used in this test
 
 ---
 
